@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') %>
+
+
+<!-- <h1 class="my-0">All Campgrounds</h1> -->
+
+<div id="cluster-map">
+
+</div>
+
+
+
+<% for (let campground of campgrounds) {%>
+<div class="card my-3">
+    <div class="row">
+        <div class="col-md-4">
+            <% if (campground.images.length) {%>
+            <img crossorigin="anonymous" class="img-fluid" alt="" src="<%=campground.images[0].url %>">
+            <% }else { %>
+            <img crossorigin="anonymous" class="img-fluid" alt=""
+                src="https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024">
+            <% } %>
+        </div>
+        <div class="col-md-8">
+            <h5 class="card-title mt-3"><%=campground.title %></h5>
+            <p class="card-text">
+                <small class="text-muted"><%= campground.location %></small>
+            </p>
+            <p class="card-text"><%=campground.description %></p>
+
+            <a href="campgrounds/<%=campground.id %>" class="btn btn-primary">View Details</a>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN %>';
+    /* beautify preserve:start */
+    const campgrounds = {features: <%-JSON.stringify(campgrounds)%>}
+    /* beautify preserve:end */
+</script>
+
+<script src="/javascripts/clusterMap.js"></script>
